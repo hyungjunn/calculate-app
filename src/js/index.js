@@ -8,7 +8,12 @@ function buttonClick(value) {
   if (isNaN(parseInt(value))) {
     handleSymbol(value);
   } else {
-    handleNumber(value);
+    try {
+      handleNumber(value);
+    } catch (e) {
+      alert(e.message);
+      resetCalculate();
+    }
   }
 
   $screen.innerText = buffer;
@@ -17,9 +22,7 @@ function buttonClick(value) {
 function handleSymbol(symbol) {
   switch (symbol) {
     case "C":
-      buffer = "0";
-      result = 0;
-      previousOperator = null;
+      resetCalculate();
       break;
 
     case "←":
@@ -33,7 +36,7 @@ function handleSymbol(symbol) {
     case "+":
     case "-":
     case "x":
-    case "+":
+    case "÷":
       handleMath(symbol);
       break;
 
@@ -46,6 +49,12 @@ function handleSymbol(symbol) {
       previousOperator = null;
       break;
   }
+}
+
+function resetCalculate() {
+  buffer = "0";
+  result = 0;
+  previousOperator = null;
 }
 
 function handleMath(symbol) {
@@ -76,6 +85,9 @@ function calculateResult(intBuffer) {
 
 function handleNumber(value) {
   if (buffer === "0" || buffer === "" + result) {
+    if (previousOperator === "÷") {
+      throw new Error("0으로 나눌 수는 없습니다.");
+    }
     buffer = value;
   } else {
     buffer += value;
