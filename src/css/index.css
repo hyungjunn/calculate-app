@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: monospace;
+}
+
+.calculator {
+  width: 400px;
+  background-color: #000;
+}
+
+.screen {
+  color: #fff;
+  height: 80px;
+  font-size: 40px;
+  text-align: right;
+  padding: 20px 5px;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  margin-top: 10px;
+}
+
+.calculator-button {
+  height: 100px;
+  font-size: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: #d8d9db;
+  color: #000;
+}
+
+/* Special buttons: C */
+.calculator-button.double {
+  grid-column: span 2; /* Spans 2 columns */
+  background-color: #a5a5a5;
+}
+
+.calculator-button.double:hover {
+  background-color: #b0b0b0;
+}
+
+/* Operator buttons: ÷, x, -, +, = */
+.calculator-button.operator {
+  background-color: #df974c;
+  color: white;
+}
+
+.calculator-button.operator:hover {
+  background-color: #dfb07e;
+}
+
+/* The "0" button spanning 3 columns */
+.calculator-button.triple {
+  grid-column: span 3;
+  background-color: #d8d9db;
+}
+
+.calculator-button:hover {
+  background-color: #ebebeb;
+}
