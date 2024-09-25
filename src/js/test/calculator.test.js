@@ -1,26 +1,6 @@
 import { expect, test } from "vitest";
 import Calculator from "../calculator";
 
-test("add 1 + 2 to equals 3", () => {
-  const calculator = new Calculator();
-  expect(calculator.calculate(1, 2, "+")).toBe(3);
-});
-
-test("sub 1 - 2 to equals -1", () => {
-  const calculator = new Calculator();
-  expect(calculator.calculate(1, 2, "-")).toBe(-1);
-});
-
-test("multiple 1 * 2 to equals 2", () => {
-  const calculator = new Calculator();
-  expect(calculator.calculate(1, 2, "x")).toBe(2);
-});
-
-test("divide 1 ÷ 2 to equals 0.5", () => {
-  const calculator = new Calculator();
-  expect(calculator.calculate(1, 2, "÷")).toBe(0.5);
-});
-
 test("divide by zero is throw error", () => {
   const calculator = new Calculator();
   expect(() => calculator.calculate(1, 0, "÷")).toThrowError(
@@ -35,4 +15,39 @@ test("reset calculate-app", () => {
   expect(calculator.buffer).toBe("0");
   expect(calculator.result).toBe(0);
   expect(calculator.previousOperator).toBeNull;
+});
+
+test.each([
+  { a: 1, b: 2, expected: 3 },
+  { a: 999, b: 999, expected: 1998 },
+])("add($a, $b) -> $expected", ({ a, b, expected }) => {
+  const calculator = new Calculator();
+  expect(calculator.calculate(a, b, "+")).toBe(expected);
+});
+
+test.each([
+  { a: 1, b: 2, expected: -1 },
+  { a: 0, b: 999, expected: -999 },
+])("sub($a, $b) -> $expected", ({ a, b, expected }) => {
+  const calculator = new Calculator();
+  expect(calculator.calculate(a, b, "-")).toBe(expected);
+});
+
+test.each([
+  { a: 1, b: 2, expected: 2 },
+  { a: 0, b: 999, expected: 0 },
+  { a: -3, b: -4, expected: 12 },
+  { a: -9, b: 3, expected: -27 },
+])("multiple($a, $b) -> $expected", ({ a, b, expected }) => {
+  const calculator = new Calculator();
+  expect(calculator.calculate(a, b, "x")).toBe(expected);
+});
+
+test.each([
+  { a: 1, b: 2, expected: 0.5 },
+  { a: 0, b: 999, expected: 0 },
+  { a: -4, b: 2, expected: -2 },
+])("divide($a, $b) -> $expected", ({ a, b, expected }) => {
+  const calculator = new Calculator();
+  expect(calculator.calculate(a, b, "÷")).toBe(expected);
 });
